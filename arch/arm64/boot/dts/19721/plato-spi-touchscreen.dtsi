@@ -1,0 +1,88 @@
+/* Copyright (c) 2019, OPPO Mobile Comm Corp., Ltd.
+ * ODM_LQ_EDIT
+ * File: plato-spi-touchscreen.dtsi 
+ * Description: dtsi file for touchscreen driver
+ * Version: 1.0
+ * Date: 2019/11/14
+ * Author:qujiong@ODM_LQ@BSP.Touch
+ *----------------Reversion History:------------
+ *   <author>     <data>   <version>    <desc>
+ *  qujiong     2019/10/08  1.0    add for bring up
+ */
+
+&qupv3_se10_spi {
+/* Himax device tree node */
+	status = "ok";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	himax_spi@0 {
+		status = "ok";
+		compatible = "himax,hxcommon";
+		reg = <0>;
+
+		spi-cs-high;
+		spi-max-frequency = <9600000>;  //4800000,9600000,15000000,19200000
+		/* regulator Configuration */
+		//touch_vddio-supply = <&L13A>;
+		//touch_lab-supply = <&lcdb_ldo_vreg>;
+		//touch_ibb-supply = <&lcdb_ncp_vreg>;
+
+		interrupt-parent = <&tlmm>;
+		interrupts = <9 0x2008>;
+		//vdd-supply = <&pm8994_l15>;
+		//avdd-supply = <&pm8994_l22>;
+		//pinctrl-names = "pmx_ts_active", "pmx_ts_suspend";
+		//pinctrl-0 = <&ts_active>;
+		//pinctrl-1 = <&ts_suspend>;
+		himax,panel-coords          = <0 1080 0 2340>;
+		himax,display-coords = <0 1080 0 2340>;
+		himax,irq-gpio       = <&tlmm 9 0x2008>;
+		himax,rst-gpio            = <&tlmm 8 0x00>;
+		report_type             = <1>;
+		/* Underlying clocks used by secure touch */
+		//clock-names = "iface_clk", "core_clk";
+		//clocks = <&clock_gcc clk_gcc_blsp2_ahb_clk>,
+		//<&clock_gcc clk_gcc_blsp2_qup6_i2c_apps_clk>;
+	};
+/*add for novatek noflash TP*/
+	novatek@1 {
+		status = "ok";
+		compatible = "novatek,nf_nt36672c";
+		reg = <1>; //Same as CS ID
+		chip-name = "NT36672C_NF";
+
+		//modify by zhangchaofan@ODM_LQ@BSP.TP for spi frequency, 2019-12-02
+		spi-max-frequency = <15000000>;	//4800000,9600000,15000000,19200000
+		interrupt-parent = <&tlmm>;
+		interrupts = <9 0x2008>;
+		//touch_vddio-supply = <&L13A>;	//add by zhangchaofan@ODM_LQ@BSP.TP for vddio, 2019-11-06
+		//touch_lab-supply = <&lcdb_ldo_vreg>;	//add by zhangchaofan@ODM_LQ@BSP.TP for lab, 2019-11-06
+		//touch_ibb-supply = <&lcdb_ncp_vreg>;	//add by zhangchaofan@ODM_LQ@BSP.TP for ibb, 2019-11-06
+		reset-gpio = <&tlmm 8 0x00>;
+		irq-gpio = <&tlmm 9 0x2001>;
+		boe-touchpanel,tx-rx-num = <18 36>;   //boe channel=<18 36> add by qujiong@ODM_LQ@BSP.TP for selftest, 2019-11-19
+		jdi-touchpanel,tx-rx-num = <16 36>;   //jdi channel=<16 36> add by qujiong@ODM_LQ@BSP.TP for selftest, 2019-11-19
+		touchpanel,max-num-support = <10>;
+		touchpanel,panel-coords = <1080 2400>;
+		touchpanel,display-coords = <1080 2400>;
+		touchpanel,touchmajor-limit = <0 54>;
+		incell_screen;
+		fw_edge_limit_support;
+		black_gesture_support;
+		charger_pump_support;
+		headset_pump_support;
+		//spurious_fingerprint_support;
+		//lcd_trigger_fp_check;
+		esd_handle_support;
+		black_gesture_test_support;
+		game_switch_support;
+		noflash_support;
+		lcd_trigger_load_tp_fw_support;
+		smart_gesture_support;
+		new_set_irq_wake_support;
+		pressure_report_support;
+		fw_update_app_support;
+		touchpanel,button-type = <4>;
+	};
+};
+

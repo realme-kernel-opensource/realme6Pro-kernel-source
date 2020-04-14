@@ -1,0 +1,11 @@
+
+#ifdef VENDOR_EDIT
+#Added by Tong.han@Bsp.group.Tp for synaptics ic driver
+
+config TOUCHPANEL_OPPO
+	default y
+	bool "TP oppo_touchscreen "
+	---help---
+	say Y to enable driver for Touchpanel useing oppo_touchscreen
+
+#endif

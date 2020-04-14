@@ -1,0 +1,45 @@
+/* Copyright (c) 2019, OPPO Mobile Comm Corp., Ltd.
+ * ODM_LQ_EDIT
+ * File: hx83112a-spi-touchscreen.dtsi
+ * Description: dtsi file for touchscreen driver
+ * Version: 1.0
+ * Date: 2019/10/08
+ * Author:qujiong@ODM_LQ@BSP.Touch
+ *----------------Reversion History:------------
+ *   <author>     <data>   <version>    <desc>
+ *  qujiong     2019/10/08  1.0    add for bring up
+ */
+
+&qupv3_se10_spi {
+        status = "ok";
+        himax_spi{
+                status = "ok";
+                compatible = "himax,hxcommon";
+                reg = <0>;
+
+                spi-cs-high;
+                spi-max-frequency = <9600000>;  //4800000,9600000,15000000,19200000
+                /* regulator Configuration */
+                touch_vddio-supply = <&L13A>;
+                touch_lab-supply = <&lcdb_ldo_vreg>;
+                touch_ibb-supply = <&lcdb_ncp_vreg>;
+
+                interrupt-parent = <&tlmm>;
+                interrupts = <9 0x2008>;
+                //vdd-supply = <&pm8994_l15>;
+                //avdd-supply = <&pm8994_l22>;
+                //pinctrl-names = "pmx_ts_active", "pmx_ts_suspend";
+                //pinctrl-0 = <&ts_active>;
+                //pinctrl-1 = <&ts_suspend>;
+                himax,panel-coords          = <0 1080 0 2340>;
+                himax,display-coords = <0 1080 0 2340>;
+                himax,irq-gpio       = <&tlmm 9 0x2008>;
+                himax,rst-gpio            = <&tlmm 8 0x00>;
+                report_type             = <1>;
+                /* Underlying clocks used by secure touch */
+                //clock-names = "iface_clk", "core_clk";
+                //clocks = <&clock_gcc clk_gcc_blsp2_ahb_clk>,
+                //<&clock_gcc clk_gcc_blsp2_qup6_i2c_apps_clk>;
+        };
+};
+

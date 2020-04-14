@@ -1,0 +1,208 @@
+/*
+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "atoll-audio-overlay.dtsi"
+
+&wcd937x_codec {
+	status = "ok";
+	//def ODM_LQ_EDIT
+	//chengong@ODM_LQ@Multimedia.Audio,2019/10/28,add for micbias
+	qcom,cdc-micbias2-mv = <2700>;
+	//endif
+};
+
+&wcd938x_codec {
+	status = "disabled";
+};
+
+&wcd937x_rx_slave {
+	status = "ok";
+};
+
+&wcd937x_tx_slave {
+	status = "ok";
+};
+
+&wcd938x_rx_slave {
+	status = "disabled";
+};
+
+&wcd938x_tx_slave {
+	status = "disabled";
+};
+
+
+&atoll_snd {
+	qcom,model = "atoll-wcd937x-snd-card";
+	qcom,audio-routing =
+		"AMIC1", "MIC BIAS1",
+		"MIC BIAS1", "Analog Mic1",
+		"AMIC2", "MIC BIAS2",
+		"MIC BIAS2", "Analog Mic2",
+		"AMIC3", "MIC BIAS3",
+		"MIC BIAS3", "Analog Mic3",
+		"IN1_HPHL", "HPHL_OUT",
+		"IN2_HPHR", "HPHR_OUT",
+		"IN3_AUX", "AUX_OUT",
+		"TX SWR_ADC0", "ADC1_OUTPUT",
+		"TX SWR_ADC2", "ADC2_OUTPUT",
+		"TX SWR_DMIC0", "DMIC1_OUTPUT",
+		"TX SWR_DMIC1", "DMIC2_OUTPUT",
+		"TX SWR_DMIC2", "DMIC3_OUTPUT",
+		"TX SWR_DMIC3", "DMIC4_OUTPUT",
+		"TX SWR_DMIC4", "DMIC5_OUTPUT",
+		"TX SWR_DMIC5", "DMIC6_OUTPUT",
+		"TX SWR_DMIC6", "DMIC7_OUTPUT",
+		"TX SWR_DMIC7", "DMIC8_OUTPUT",
+		"WSA SRC0_INP", "SRC0",
+		"WSA_TX DEC0_INP", "TX DEC0 MUX",
+		"WSA_TX DEC1_INP", "TX DEC1 MUX",
+		"RX_TX DEC0_INP", "TX DEC0 MUX",
+		"RX_TX DEC1_INP", "TX DEC1 MUX",
+		"RX_TX DEC2_INP", "TX DEC2 MUX",
+		"RX_TX DEC3_INP", "TX DEC3 MUX",
+		"SpkrLeft IN", "WSA_SPK1 OUT",
+		"SpkrRight IN", "WSA_SPK2 OUT",
+		"VA_AIF1 CAP", "VA_SWR_CLK",
+		"VA_AIF2 CAP", "VA_SWR_CLK",
+		"VA_AIF3 CAP", "VA_SWR_CLK",
+		"VA MIC BIAS1", "Digital Mic0",
+		"VA MIC BIAS1", "Digital Mic1",
+		"VA MIC BIAS3", "Digital Mic2",
+		"VA MIC BIAS3", "Digital Mic3",
+		"VA DMIC0", "VA MIC BIAS1",
+		"VA DMIC1", "VA MIC BIAS1",
+		"VA DMIC2", "VA MIC BIAS3",
+		"VA DMIC3", "VA MIC BIAS3",
+		"VA SWR_ADC0", "VA_SWR_CLK",
+		"VA SWR_ADC1", "VA_SWR_CLK",
+		"VA SWR_ADC2", "VA_SWR_CLK",
+		"VA SWR_ADC3", "VA_SWR_CLK",
+		"VA SWR_MIC0", "VA_SWR_CLK",
+		"VA SWR_MIC1", "VA_SWR_CLK",
+		"VA SWR_MIC2", "VA_SWR_CLK",
+		"VA SWR_MIC3", "VA_SWR_CLK",
+		"VA SWR_MIC4", "VA_SWR_CLK",
+		"VA SWR_MIC5", "VA_SWR_CLK",
+		"VA SWR_MIC6", "VA_SWR_CLK",
+		"VA SWR_MIC7", "VA_SWR_CLK",
+		"VA SWR_ADC0", "ADC1_OUTPUT",
+		/* #ifdef VENDOR_EDIT */
+		/* dongzhenyu@MM.AudioDriver.Machine, 2019/11/22,Add for using sec mic to wake up */
+		//"VA SWR_ADC1", "ADC2_OUTPUT",
+		"VA SWR_ADC2", "ADC2_OUTPUT",
+		/* #endif VENDOR_EDIT */
+		"VA SWR_ADC3", "ADC4_OUTPUT",
+		"VA SWR_MIC0", "DMIC1_OUTPUT",
+		"VA SWR_MIC1", "DMIC2_OUTPUT",
+		"VA SWR_MIC2", "DMIC3_OUTPUT",
+		"VA SWR_MIC3", "DMIC4_OUTPUT",
+		"VA SWR_MIC4", "DMIC5_OUTPUT",
+		"VA SWR_MIC5", "DMIC6_OUTPUT",
+		"VA SWR_MIC6", "DMIC7_OUTPUT",
+		"VA SWR_MIC7", "DMIC8_OUTPUT";
+	qcom,codec-aux-devs = <&wcd937x_codec>;
+	//def ODM_LQ_EDIT
+	//chengong@ODM_LQ@Multimedia.Audio,2019/12/09,add for disable ext disp
+	qcom,ext-disp-audio-rx = <0>;
+	asoc-cpu = <&dai_mi2s0>, <&dai_mi2s1>,
+			<&dai_mi2s2>, <&dai_mi2s3>,
+			<&dai_mi2s4>, <&dai_mi2s5>, <&dai_pri_auxpcm>,
+			<&dai_sec_auxpcm>, <&dai_tert_auxpcm>,
+			<&dai_quat_auxpcm>, <&dai_quin_auxpcm>,
+			<&dai_sen_auxpcm>,
+			<&afe_pcm_rx>, <&afe_pcm_tx>, <&afe_proxy_rx>,
+			<&afe_proxy_tx>, <&incall_record_rx>,
+			<&incall_record_tx>, <&incall_music_rx>,
+			<&incall_music_2_rx>,
+			<&usb_audio_rx>, <&usb_audio_tx>,
+			<&sb_7_rx>, <&sb_7_tx>, <&sb_8_tx>,
+			<&dai_pri_tdm_rx_0>, <&dai_pri_tdm_tx_0>,
+			<&dai_sec_tdm_rx_0>, <&dai_sec_tdm_tx_0>,
+			<&dai_tert_tdm_rx_0>, <&dai_tert_tdm_tx_0>,
+			<&dai_quat_tdm_rx_0>, <&dai_quat_tdm_tx_0>,
+			<&dai_quin_tdm_rx_0>, <&dai_quin_tdm_tx_0>,
+			<&dai_sen_tdm_rx_0>, <&dai_sen_tdm_tx_0>,
+			<&wsa_cdc_dma_0_rx>, <&wsa_cdc_dma_0_tx>,
+			<&wsa_cdc_dma_1_rx>, <&wsa_cdc_dma_1_tx>,
+			<&wsa_cdc_dma_2_tx>,
+			<&va_cdc_dma_0_tx>, <&va_cdc_dma_1_tx>,
+			<&va_cdc_dma_2_tx>,
+			<&rx_cdc_dma_0_rx>, <&tx_cdc_dma_0_tx>,
+			<&rx_cdc_dma_1_rx>, <&tx_cdc_dma_1_tx>,
+			<&rx_cdc_dma_2_rx>, <&tx_cdc_dma_2_tx>,
+			<&rx_cdc_dma_3_rx>, <&tx_cdc_dma_3_tx>,
+			<&rx_cdc_dma_4_rx>, <&tx_cdc_dma_4_tx>,
+			<&rx_cdc_dma_5_rx>, <&tx_cdc_dma_5_tx>,
+			<&rx_cdc_dma_6_rx>, <&rx_cdc_dma_7_rx>,
+			<&afe_loopback_tx>;
+	asoc-cpu-names = "msm-dai-q6-mi2s.0", "msm-dai-q6-mi2s.1",
+			"msm-dai-q6-mi2s.2", "msm-dai-q6-mi2s.3",
+			"msm-dai-q6-mi2s.4", "msm-dai-q6-mi2s.5",
+			"msm-dai-q6-auxpcm.1",
+			"msm-dai-q6-auxpcm.2", "msm-dai-q6-auxpcm.3",
+			"msm-dai-q6-auxpcm.4", "msm-dai-q6-auxpcm.5",
+			"msm-dai-q6-auxpcm.6", "msm-dai-q6-dev.224",
+			"msm-dai-q6-dev.225", "msm-dai-q6-dev.241",
+			"msm-dai-q6-dev.240", "msm-dai-q6-dev.32771",
+			"msm-dai-q6-dev.32772", "msm-dai-q6-dev.32773",
+			"msm-dai-q6-dev.32770",
+			"msm-dai-q6-dev.28672", "msm-dai-q6-dev.28673",
+			"msm-dai-q6-dev.16398", "msm-dai-q6-dev.16399",
+			"msm-dai-q6-dev.16401",
+			"msm-dai-q6-tdm.36864", "msm-dai-q6-tdm.36865",
+			"msm-dai-q6-tdm.36880", "msm-dai-q6-tdm.36881",
+			"msm-dai-q6-tdm.36896", "msm-dai-q6-tdm.36897",
+			"msm-dai-q6-tdm.36912", "msm-dai-q6-tdm.36913",
+			"msm-dai-q6-tdm.36928", "msm-dai-q6-tdm.36929",
+			"msm-dai-q6-tdm.36944", "msm-dai-q6-tdm.36945",
+			"msm-dai-cdc-dma-dev.45056",
+			"msm-dai-cdc-dma-dev.45057",
+			"msm-dai-cdc-dma-dev.45058",
+			"msm-dai-cdc-dma-dev.45059",
+			"msm-dai-cdc-dma-dev.45061",
+			"msm-dai-cdc-dma-dev.45089",
+			"msm-dai-cdc-dma-dev.45091",
+			"msm-dai-cdc-dma-dev.45093",
+			"msm-dai-cdc-dma-dev.45104",
+			"msm-dai-cdc-dma-dev.45105",
+			"msm-dai-cdc-dma-dev.45106",
+			"msm-dai-cdc-dma-dev.45107",
+			"msm-dai-cdc-dma-dev.45108",
+			"msm-dai-cdc-dma-dev.45109",
+			"msm-dai-cdc-dma-dev.45110",
+			"msm-dai-cdc-dma-dev.45111",
+			"msm-dai-cdc-dma-dev.45112",
+			"msm-dai-cdc-dma-dev.45113",
+			"msm-dai-cdc-dma-dev.45114",
+			"msm-dai-cdc-dma-dev.45115",
+			"msm-dai-cdc-dma-dev.45116",
+			"msm-dai-cdc-dma-dev.45118",
+			"msm-dai-q6-dev.24577";
+	//endif
+};
+
+//def ODM_LQ_EDIT
+//chengong@ODM_LQ@Multimedia.Audio,2019/10/25,add for disable wsa
+&bolero {
+	qcom,num-macros = <3>;
+};
+
+&wsa_macro {
+	status = "disabled";
+};
+
+&wsa_swr_gpios {
+	status = "disabled";
+};
+//endif

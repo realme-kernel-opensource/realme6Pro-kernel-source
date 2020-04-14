@@ -1,0 +1,45 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include "atoll-idp.dtsi"
+#include "atoll-wcd937x-idp-audio-overlay.dtsi"
+
+/*#ifdef ODM_LQ_EDIT*/
+/*qujiong@ODM_LQ@BSP.touch,2019/10/10,modified for bring up TP*/
+#include "plato-spi-touchscreen.dtsi"	//zhangchaofan@ODM_LQ@BSP.touch,2019/11/14
+/*zhangchaofan@ODM_LQ@BSP.touch,2019/10/29,add nova dtsifor bring up TP*/
+//#include "novatek-nt36672c-spi-tp.dtsi"	//zhangchaofan@ODM_LQ@BSP.touch,2019/11/14
+/*endif ODM_LQ_EDIT*/
+
+/ {
+	model = "wcd937x Audio Codec IDP";
+	compatible = "qcom,atoll-idp", "qcom,atoll", "qcom,idp";
+	qcom,msm-id = <407 0x0>;
+	qcom,board-id = <34 1>;
+	oppo,project = <19721 19759>;
+};
+
+/*#ifndef ODM_LQ_EDIT*/
+/*zengjianxiong@ODM_LQ@Multimedia.Dispaly,2019/10/10,modified for plato used wcd937x*/
+/*&dsi_rm69299_visionox_amoled_vid_display {
+	qcom,dsi-display-active;
+};*/
+/*else ODM_LQ_EDIT*/
+/*zengjianxiong@ODM_LQ@Multimedia.Dispaly,2019/10/25,modified for for bringup C-PHY panel*/
+&dsi_nt36672c_boe_video_display {
+    qcom,dsi-display-active;
+};
+/*#endif ODM_LQ_EDIT*/

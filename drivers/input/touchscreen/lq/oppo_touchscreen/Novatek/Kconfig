@@ -1,0 +1,1 @@
+source "drivers/input/touchscreen/lq/oppo_touchscreen/Novatek/NT36672C_noflash/Kconfig"
